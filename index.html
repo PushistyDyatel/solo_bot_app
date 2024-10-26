@@ -594,15 +594,6 @@
             Telegram.WebApp.sendData()
         },
         myTest(msg_id, with_webview) {
-            if (!DemoApp.initDataUnsafe.query_id) {
-                alert('WebViewQueryId not defined');
-                return;
-            }
-
-            document.querySelectorAll('button').forEach((btn) => btn.disabled = true);
-
-            const btn       = document.querySelector('#btn_status');
-            btn.textContent = 'Sending...';
 
           Telegram.WebApp.sendData("sdfr")
         },
