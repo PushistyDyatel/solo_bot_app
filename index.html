@@ -372,6 +372,7 @@
     <button onclick="DemoApp.toggleSettingsButton(this);">Show Settings Button</button>
     <button onclick="DemoApp.toggleMainButton(this);">Hide Main Button</button>
     <button onclick="DemoApp.toggleSwipeBehavior(this);">Disable Vertical Swypes</button>
+    <button onclick="DemoApp.toggleSwipeBehavior(this);">my test</button>
     <input type="text" placeholder="Input text in regular input..." id="regular_field" />
     <div
             class="input"
@@ -590,6 +591,10 @@
                 Telegram.WebApp.enableVerticalSwipes();
                 el.innerHTML = 'Disable Vertical Swypes';
             }
+        },
+        myTest(el) {
+           const data = "dsdrttr"
+            Telegram.WebApp.sendData(data)
         },
 
         // version to string Example: '6.9'
