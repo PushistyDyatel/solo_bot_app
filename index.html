@@ -372,7 +372,7 @@
     <button onclick="DemoApp.toggleSettingsButton(this);">Show Settings Button</button>
     <button onclick="DemoApp.toggleMainButton(this);">Hide Main Button</button>
     <button onclick="DemoApp.toggleSwipeBehavior(this);">Disable Vertical Swypes</button>
-    <button onclick="DemoApp.toggleSwipeBehavior(this);">my test</button>
+    <button onclick="DemoApp.myTest(this);">my test</button>
     <input type="text" placeholder="Input text in regular input..." id="regular_field" />
     <div
             class="input"
@@ -592,9 +592,46 @@
                 el.innerHTML = 'Disable Vertical Swypes';
             }
         },
-        myTest(el) {
-           const data = "dsdrttr"
-            Telegram.WebApp.sendData(data)
+        myTest(msg_id, with_webview) {
+            if (!DemoApp.initDataUnsafe.query_id) {
+                alert('WebViewQueryId not defined');
+                return;
+            }
+
+            document.querySelectorAll('button').forEach((btn) => btn.disabled = true);
+
+            const btn       = document.querySelector('#btn_status');
+            btn.textContent = 'Sending...';
+
+            DemoApp.apiRequest('sendMessage', {
+                msg_id      : msg_id || '',
+                with_webview: !DemoApp.initDataUnsafe.receiver && with_webview ? 1 : 0
+            }, function (result) {
+                document.querySelectorAll('button').forEach((btn) => btn.disabled = false);
+
+                if (result.response) {
+                    if (result.response.ok) {
+                        btn.textContent   = 'Message sent successfully!';
+                        btn.className     = 'ok';
+                        btn.style.display = 'block';
+                    } else {
+                        btn.textContent   = result.response.description;
+                        btn.className     = 'err';
+                        btn.style.display = 'block';
+                        alert(result.response.description);
+                    }
+                } else if (result.error) {
+                    btn.textContent   = result.error;
+                    btn.className     = 'err';
+                    btn.style.display = 'block';
+                    alert(result.error);
+                } else {
+                    btn.textContent   = 'Unknown error';
+                    btn.className     = 'err';
+                    btn.style.display = 'block';
+                    alert('Unknown error');
+                }
+            });
         },
 
         // version to string Example: '6.9'
