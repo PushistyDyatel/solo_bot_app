@@ -28,6 +28,7 @@
 <button class="button" id="showAlert">Show Alert</button>
 <button class="button" id="showConfirm">Show Confirm</button>
 <button class="button" id="showPopup">Show Popup</button>
+<button class="button" id="send">Send</button>
 <script>
     let tg = window.Telegram.WebApp;
     tg.expand();
@@ -57,6 +58,21 @@
         }, function(buttonId) {
             tg.showAlert("You clicked: " + buttonId);
         });
+    });
+
+    // Получаем и декодируем initData
+    let initData = tg.initData || '';
+    let initDataUnsafe = tg.initDataUnsafe || {};
+
+    // Проверяем авторизацию пользователя
+    if (initDataUnsafe.user) {
+        console.log("User is authorized:", initDataUnsafe.user.first_name);
+    } else {
+        console.log("User is not authorized");
+    }
+
+    document.getElementById('send').addEventListener('click', function() {
+        tg.sendData("Some data from Mini App");
     });
 
     tg.MainButton.setText("Main Action").show().onClick(function(){
